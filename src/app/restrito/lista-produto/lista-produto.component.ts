@@ -16,22 +16,19 @@ export class ListaProdutoComponent {
   }
   listarProdutos(): void {
     this._produtoService.getProdutos()
-      .subscribe(
-        retornaProduto => {
-          this.produtos = retornaProduto.map(
-            item => {
-              return new Produto(
-                item.id,
-                item.produto,
-                item.descricao,
-                item.foto,
-                item.preco
-              );
+        .subscribe(produtos => {
+
+            for (const produto of produtos) {
+                this.produtos.push(new Produto(
+                    produto.id,
+                    produto.produto,
+                    produto.descricao,
+                    produto.foto,
+                    produto.preco
+                ));
             }
-          )
-        }
-      )
-  }
+        });
+}
   excluir(id: number) {
     this._produtoService.removerProduto(id).subscribe(
       produto => {
